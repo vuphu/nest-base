@@ -7,5 +7,6 @@ export const env = {
   DATABASE_USER: process.env.DATABASE_USER,
   DATABASE_PASSWORD: process.env.DATABASE_PASSWORD,
   DATABASE_NAME: process.env.DATABASE_NAME,
-  APP_PORT: Number(process.env.APP_PORT),
+  PORT: Number(process.env.PORT),
+  JWT_SECRET_KEY: process.env.JWT_SECRET_KEY,
 };

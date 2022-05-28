@@ -13,7 +13,7 @@ export class EventService {
   }
 
   getEventById(eventId: string): Promise<Event> {
-    return this.eventRepository.findOne({ id: eventId });
+    return this.eventRepository.findOne(eventId);
   }
 
   async createEvent(dto: CreateEventDto): Promise<void> {
