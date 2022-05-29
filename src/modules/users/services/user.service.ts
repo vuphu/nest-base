@@ -18,7 +18,7 @@ export class UserService {
 
     const isExist = await this.userRepository.isExists({ username });
     if (isExist) {
-      throw new BadRequestException('User already exists');
+      throw new BadRequestException({ key: 'errors.user_already_exist' });
     }
 
     await this.userRepository.insert({
@@ -31,7 +31,7 @@ export class UserService {
     const user = await this.userRepository.findOne({ username });
 
     if (!user || !brcypt.compareSync(password, user.password)) {
-      throw new UnauthorizedException('User credentials is not valid');
+      throw new UnauthorizedException({ key: 'errors.invalid_user_credentials' });
     }
 
     return omit(user, 'password');
