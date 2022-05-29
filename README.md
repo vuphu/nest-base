@@ -5,5 +5,6 @@
 - Copy .env-example to .env (`cp .env-example .env`)
 - Install nodes packages (`npm install`)
 - Run source code (`npm run start` or `npm run start:dev` with hot-reload)
+- API documentation: '{{host}}/api`
 
 ### JavaScript native version: https://github.com/vuphu/todo-node
