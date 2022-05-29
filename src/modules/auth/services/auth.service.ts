@@ -1,11 +1,8 @@
+import { LoginDto, RegisterDto } from '../dtos';
+import { JwtPayload, Token } from '../types';
+import { User, UserService } from '@/modules/users';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { User } from 'src/modules/users/models/user.model';
-import { UserService } from 'src/modules/users/services/user.service';
-import { LoginDto } from '../dtos/login.dto';
-import { RegisterDto } from '../dtos/register.dto';
-import { JwtPayload } from '../types/jwt-payload.type';
-import { Token } from '../types/token.type';
 
 @Injectable()
 export class AuthService {

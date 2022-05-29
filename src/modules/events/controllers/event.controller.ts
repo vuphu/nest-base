@@ -1,9 +1,8 @@
+import { CreateEventDto, UpdateEventDto } from '../dtos';
+import { Event } from '../models';
+import { EventService } from '../services';
+import { JwtAuthGuard } from '@/modules/auth';
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, UseGuards } from '@nestjs/common';
-import { CreateEventDto } from '../dtos/create-event.dto';
-import { UpdateEventDto } from '../dtos/update-event.dto';
-import { EventService } from '../services/event.service';
-import { Event } from '../models/event.model';
-import { JwtAuthGuard } from 'src/modules/auth/guards/jwt-auth.guard';
 
 @Controller('events')
 @UseGuards(JwtAuthGuard)

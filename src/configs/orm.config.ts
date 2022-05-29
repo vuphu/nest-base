@@ -1,8 +1,7 @@
+import { env } from './env.config';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
-import { env } from './env.config';
 
-console.log(`${process.cwd()}/dist/modules/*/migrations/*.js`);
 export default <PostgresConnectionOptions>{
   type: 'postgres',
   host: env.DATABASE_HOST,

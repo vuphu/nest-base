@@ -1,6 +1,6 @@
-import { BaseRepository } from 'src/modules/core/repositories/base.repository';
+import { Event } from '../models';
+import { BaseRepository } from '@/modules/core';
 import { EntityRepository } from 'typeorm';
-import { Event } from '../models/event.model';
 
 @EntityRepository(Event)
 export class EventRepository extends BaseRepository<Event> {}
