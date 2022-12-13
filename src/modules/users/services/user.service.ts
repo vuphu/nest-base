@@ -10,13 +10,13 @@ export class UserService {
   constructor(private userRepository: UserRepository) {}
 
   async getUserById(userId: string): Promise<User> {
-    return this.userRepository.findOne(userId);
+    return this.userRepository.findOneBy({ id: userId });
   }
 
   async createUser(dto: CreateUserDto): Promise<void> {
     const { username, password } = dto;
 
-    const isExist = await this.userRepository.isExists({ username });
+    const isExist = await this.userRepository.exist({ where: { username } });
     if (isExist) {
       throw new BadRequestException({ key: 'errors.user_already_exist' });
     }
@@ -28,7 +28,7 @@ export class UserService {
   }
 
   async verifyUser(username: string, password: string): Promise<Partial<User>> {
-    const user = await this.userRepository.findOne({ username });
+    const user = await this.userRepository.findOneBy({ username });
 
     if (!user || !brcypt.compareSync(password, user.password)) {
       throw new UnauthorizedException({ key: 'errors.invalid_user_credentials' });

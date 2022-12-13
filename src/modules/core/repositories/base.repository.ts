@@ -1,8 +1,7 @@
-import { FindConditions, Repository } from 'typeorm';
+import { EntityManager, EntityTarget, Repository } from 'typeorm';
 
 export class BaseRepository<T> extends Repository<T> {
-  async isExists(conditions?: FindConditions<T>): Promise<boolean> {
-    const count = await this.count(conditions);
-    return count > 0;
+  constructor(target: EntityTarget<T>, manager: EntityManager) {
+    super(target, manager);
   }
 }
