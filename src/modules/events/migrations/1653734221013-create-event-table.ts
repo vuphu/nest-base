@@ -1,3 +1,4 @@
+import { ColumnGenerator } from '@/libs/typeorm-extended/columns';
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export class CreateEventTable1653734221013 implements MigrationInterface {
@@ -6,29 +7,14 @@ export class CreateEventTable1653734221013 implements MigrationInterface {
       new Table({
         name: 'events',
         columns: [
-          {
-            name: 'id',
-            type: 'character varying',
-            isPrimary: true,
-            default: 'gen_random_uuid()',
-          },
-          {
-            name: 'name',
-            type: 'character varying',
-          },
-          {
-            name: 'start_date',
-            type: 'date',
-          },
-          {
-            name: 'due_date',
-            type: 'date',
-          },
-          {
-            name: 'description',
-            type: 'character varying',
-            isNullable: true,
-          },
+          ColumnGenerator.primaryUUID(),
+          ColumnGenerator.builder().string('name').make(),
+          ColumnGenerator.builder().string('description').nullable().make(),
+          ColumnGenerator.builder().timestamp('start_date').make(),
+          ColumnGenerator.builder().timestamp('due_date').make(),
+          ColumnGenerator.createdAt(),
+          ColumnGenerator.updatedAt(),
+          ColumnGenerator.deletedAt(),
         ],
       }),
     );

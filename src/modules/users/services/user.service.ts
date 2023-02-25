@@ -1,6 +1,6 @@
-import { CreateUserDto } from '../dtos';
 import { User } from '../models';
 import { UserRepository } from '../repositories';
+import { CreateUserDto } from '../dtos/requests';
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import * as brcypt from 'bcrypt';
 import { omit } from 'lodash';

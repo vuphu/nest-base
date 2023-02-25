@@ -1,9 +1,11 @@
-import { CreateEventDto, UpdateEventDto } from '../dtos';
 import { Event } from '../models';
 import { EventService } from '../services';
+import { EventDto } from '../dtos/responses';
+import { CreateEventDto, UpdateEventDto } from '../dtos/requests';
 import { JwtAuthGuard } from '@/modules/auth';
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { plainToInstance } from 'class-transformer';
 
 @Controller('events')
 @ApiTags('Events')
@@ -13,31 +15,33 @@ export class EventController {
 
   @Get()
   @ApiResponse({ type: Event, isArray: true })
-  paginateEvents(): Promise<Event[]> {
-    return this.eventService.paginateEvents();
+  async paginateEvents(): Promise<EventDto[]> {
+    const events = await this.eventService.paginateEvents();
+    return plainToInstance(EventDto, events);
   }
 
   @Get(':id')
   @ApiResponse({ type: Event })
-  getEventById(@Param('id') eventId: string): Promise<Event> {
-    return this.eventService.getEventById(eventId);
+  async getEventById(@Param('id') eventId: string): Promise<EventDto> {
+    const event = await this.eventService.getEventById(eventId);
+    return plainToInstance(EventDto, event);
   }
 
   @Post()
   @HttpCode(HttpStatus.NO_CONTENT)
-  createEvent(@Body() dto: CreateEventDto): Promise<void> {
-    return this.eventService.createEvent(dto);
+  async createEvent(@Body() dto: CreateEventDto): Promise<void> {
+    await this.eventService.createEvent(dto);
   }
 
   @Put(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  updateEvent(@Param('id') eventId: string, @Body() dto: UpdateEventDto): Promise<void> {
-    return this.eventService.updateEvent(eventId, dto);
+  async updateEvent(@Param('id') eventId: string, @Body() dto: UpdateEventDto): Promise<void> {
+    await this.eventService.updateEvent(eventId, dto);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  deleteEvent(@Param('id') eventId: string): Promise<void> {
-    return this.eventService.deleteEvent(eventId);
+  async deleteEvent(@Param('id') eventId: string): Promise<void> {
+    await this.eventService.deleteEvent(eventId);
   }
 }

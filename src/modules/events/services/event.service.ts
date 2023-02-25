@@ -1,6 +1,6 @@
-import { CreateEventDto, UpdateEventDto } from '../dtos';
 import { EventRepository } from '../repositories';
 import { Event } from '../models';
+import { CreateEventDto, UpdateEventDto } from '../dtos/requests';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

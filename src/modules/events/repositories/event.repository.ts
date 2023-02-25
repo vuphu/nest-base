@@ -1,5 +1,5 @@
 import { Event } from '../models';
-import { BaseRepository } from '@/modules/core';
+import { BaseRepository } from '@/common';
 import { DataSource } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectDataSource } from '@nestjs/typeorm';

@@ -1,25 +1,17 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseModel } from '@/common/models';
+import { Column, Entity } from 'typeorm';
 
 @Entity('events')
-export class Event {
-  @ApiProperty()
-  @PrimaryGeneratedColumn()
-  id: string;
-
-  @ApiProperty()
+export class Event extends BaseModel {
   @Column()
   name: string;
 
-  @ApiProperty()
-  @Column({ type: 'date' })
+  @Column({ type: 'timestamp' })
   startDate: Date;
 
-  @ApiProperty()
-  @Column({ type: 'date' })
+  @Column({ type: 'timestamp' })
   dueDate: Date;
 
-  @ApiProperty()
   @Column({ nullable: true })
   description: string;
 }
