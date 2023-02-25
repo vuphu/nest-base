@@ -1,5 +1,5 @@
 import { User } from '../models';
-import { BaseRepository } from '@/modules/core';
+import { BaseRepository } from '@/common';
 import { Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { InjectDataSource } from '@nestjs/typeorm';
