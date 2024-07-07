@@ -6,7 +6,10 @@ import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(private userService: UserService, private jwtService: JwtService) {}
+  constructor(
+    private userService: UserService,
+    private jwtService: JwtService,
+  ) {}
 
   async verifyPayload(payload: JwtPayload): Promise<User> {
     const user = await this.userService.getUserById(payload.id);
@@ -16,8 +19,8 @@ export class AuthService {
     return user;
   }
 
-  async verifyUser(username: string, password: string): Promise<Partial<User>> {
-    return this.userService.verifyUser(username, password);
+  async verifyUser(email: string, password: string): Promise<Partial<User>> {
+    return this.userService.verifyUser(email, password);
   }
 
   async register(dto: RegisterRequestDto): Promise<void> {
@@ -25,9 +28,9 @@ export class AuthService {
   }
 
   async login(dto: LoginRequestDto): Promise<Token> {
-    const { username, password } = dto;
+    const { email, password } = dto;
 
-    const user = await this.userService.verifyUser(username, password);
+    const user = await this.userService.verifyUser(email, password);
     const payload: JwtPayload = { id: user.id };
 
     return {

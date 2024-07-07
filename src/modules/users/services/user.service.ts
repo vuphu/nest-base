@@ -14,21 +14,21 @@ export class UserService {
   }
 
   async createUser(dto: CreateUserDto): Promise<void> {
-    const { username, password } = dto;
+    const { email, password } = dto;
 
-    const isExist = await this.userRepository.exist({ where: { username } });
+    const isExist = await this.userRepository.exist({ where: { email } });
     if (isExist) {
       throw new BadRequestException({ key: 'errors.user_already_exist' });
     }
 
     await this.userRepository.insert({
-      username,
+      email,
       password: await brcypt.hash(password, 10),
     });
   }
 
-  async verifyUser(username: string, password: string): Promise<Partial<User>> {
-    const user = await this.userRepository.findOneBy({ username });
+  async verifyUser(email: string, password: string): Promise<Partial<User>> {
+    const user = await this.userRepository.findOneBy({ email });
 
     if (!user || !brcypt.compareSync(password, user.password)) {
       throw new UnauthorizedException({ key: 'errors.invalid_user_credentials' });

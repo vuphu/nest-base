@@ -1,6 +1,5 @@
-import { ColumnGenerator } from '@/libs/typeorm-extended/columns';
-import { ConstraintGenerator } from '@/libs/typeorm-extended/constraints';
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import { ColumnGenerator } from '@/add-ons/typeorm-extension/columns';
+import { MigrationInterface, QueryRunner, Table, TableIndex } from 'typeorm';
 
 export class CreateUserTable1653753770949 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -9,7 +8,7 @@ export class CreateUserTable1653753770949 implements MigrationInterface {
         name: 'users',
         columns: [
           ColumnGenerator.primaryUUID(),
-          ColumnGenerator.builder().string('username').make(),
+          ColumnGenerator.builder().string('email').make(),
           ColumnGenerator.builder().string('password').make(),
           ColumnGenerator.createdAt(),
           ColumnGenerator.updatedAt(),
@@ -18,7 +17,7 @@ export class CreateUserTable1653753770949 implements MigrationInterface {
       }),
     );
 
-    await ConstraintGenerator.index('users').column('username').commit(queryRunner);
+    await queryRunner.createIndex('users', new TableIndex({ columnNames: ['email'] }));
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
