@@ -1,4 +1,4 @@
-import { ColumnGenerator } from '@/add-ons/typeorm-extension/columns';
+import { ColumnGenerator } from '@/add-ons/typeorm-extension';
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 export class CreateEventTable1653734221013 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
