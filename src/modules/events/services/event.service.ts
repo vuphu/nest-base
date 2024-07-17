@@ -1,14 +1,15 @@
 import { EventRepository } from '../repositories';
 import { Event } from '../models';
 import { CreateEventDto, UpdateEventDto } from '../dtos/requests';
+import { PaginateCollection, PaginateOptions } from '@/common';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class EventService {
   constructor(private eventRepository: EventRepository) {}
 
-  paginateEvents(): Promise<Event[]> {
-    return this.eventRepository.find();
+  paginateEvents(paginateOptions: PaginateOptions): Promise<PaginateCollection<Event>> {
+    return this.eventRepository.paginate({}, paginateOptions);
   }
 
   getEventById(eventId: string): Promise<Event> {

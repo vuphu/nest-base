@@ -1,13 +1,14 @@
+import { BaseModel } from '@/common/models';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('users')
-export class User {
+export class User extends BaseModel {
   @PrimaryGeneratedColumn()
   id: string;
 
-  @Column()
+  @Column({ type: 'character varying' })
   email: string;
 
-  @Column()
+  @Column({ type: 'character varying' })
   password: string;
 }

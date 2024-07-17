@@ -16,8 +16,8 @@ export class UserService {
   async createUser(dto: CreateUserDto): Promise<void> {
     const { email, password } = dto;
 
-    const isExist = await this.userRepository.exist({ where: { email } });
-    if (isExist) {
+    const isUserExisted = await this.userRepository.exist({ where: { email } });
+    if (isUserExisted) {
       throw new BadRequestException({ key: 'errors.user_already_exist' });
     }
 

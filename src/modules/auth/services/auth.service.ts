@@ -1,5 +1,5 @@
 import { JwtPayload, Token } from '../types';
-import { LoginRequestDto, RegisterRequestDto } from '../dtos';
+import { SignInRequestDto, RegisterRequestDto } from '../dtos';
 import { User, UserService } from '@/modules/users';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -23,11 +23,11 @@ export class AuthService {
     return this.userService.verifyUser(email, password);
   }
 
-  async register(dto: RegisterRequestDto): Promise<void> {
+  async registerUser(dto: RegisterRequestDto): Promise<void> {
     return this.userService.createUser(dto);
   }
 
-  async login(dto: LoginRequestDto): Promise<Token> {
+  async verifyAndGenerateToken(dto: SignInRequestDto): Promise<Token> {
     const { email, password } = dto;
 
     const user = await this.userService.verifyUser(email, password);

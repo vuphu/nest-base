@@ -7,13 +7,18 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
   SwaggerModule.setup(
-    'api',
+    'docs',
     app,
     SwaggerModule.createDocument(
       app,
-      new DocumentBuilder().setTitle('Todo API').setDescription('The Todo API description').setVersion('1.0').build(),
+      new DocumentBuilder()
+        .setTitle('Todo API')
+        .setDescription('The Todo API description')
+        .setVersion('1.0')
+        .addBearerAuth()
+        .build(),
     ),
   );
 

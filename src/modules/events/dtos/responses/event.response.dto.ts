@@ -1,21 +1,21 @@
 import { BaseResponseDto } from '@/common/dtos/responses/base.dto';
 import { ApiProperty } from '@nestjs/swagger';
-import { Expose } from 'class-transformer';
+import { IsDate, IsString } from 'class-validator';
 
 export class EventDto extends BaseResponseDto {
   @ApiProperty()
-  @Expose()
+  @IsString()
   name: string;
 
-  @ApiProperty({ name: 'start_date' })
-  @Expose()
+  @ApiProperty()
+  @IsDate()
   startDate: Date;
 
-  @ApiProperty({ name: 'due_date' })
-  @Expose()
+  @ApiProperty()
+  @IsDate()
   dueDate: Date;
 
   @ApiProperty()
-  @Expose()
+  @IsString()
   description: string;
 }

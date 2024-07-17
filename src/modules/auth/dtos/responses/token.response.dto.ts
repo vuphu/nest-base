@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Expose } from 'class-transformer';
+import { IsString } from 'class-validator';
 
-export class LoginResponseDto {
+export class TokenResponseDto {
   @ApiProperty()
-  @Expose()
+  @IsString()
   accessToken: string;
 }

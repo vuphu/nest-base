@@ -3,25 +3,46 @@ import { EventService } from '../services';
 import { EventDto } from '../dtos/responses';
 import { CreateEventDto, UpdateEventDto } from '../dtos/requests';
 import { JwtAuthGuard } from '@/modules/auth';
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, UseGuards } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiPaginationResponse,
+  generatePaginateResponse,
+  PaginateCollection,
+  PaginateOptionsDto,
+  ResponseInterceptor,
+} from '@/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
+  Put,
+  Query,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
 
 @Controller('events')
 @ApiTags('Events')
+@ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 export class EventController {
   constructor(private eventService: EventService) {}
 
   @Get()
-  @ApiResponse({ type: Event, isArray: true })
-  async paginateEvents(): Promise<EventDto[]> {
-    const events = await this.eventService.paginateEvents();
-    return plainToInstance(EventDto, events);
+  @ApiPaginationResponse(EventDto)
+  @UseInterceptors(new ResponseInterceptor(generatePaginateResponse(EventDto)))
+  async paginateEvents(@Query() paginateOptions: PaginateOptionsDto): Promise<PaginateCollection<Event>> {
+    return this.eventService.paginateEvents(paginateOptions);
   }
 
   @Get(':id')
-  @ApiResponse({ type: Event })
+  @ApiResponse({ type: EventDto })
   async getEventById(@Param('id') eventId: string): Promise<EventDto> {
     const event = await this.eventService.getEventById(eventId);
     return plainToInstance(EventDto, event);

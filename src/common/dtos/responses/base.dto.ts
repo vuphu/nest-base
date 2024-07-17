@@ -1,16 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Expose } from 'class-transformer';
+import { IsDate, IsUUID } from 'class-validator';
 
 export class BaseResponseDto {
   @ApiProperty()
-  @Expose()
+  @IsUUID()
   id: string;
 
   @ApiProperty()
-  @Expose()
+  @IsDate()
   createdAt: Date;
 
   @ApiProperty()
-  @Expose()
+  @IsDate()
   updatedAt: Date;
 }
