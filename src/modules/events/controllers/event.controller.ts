@@ -50,7 +50,7 @@ export class EventController {
   @Get(':eventId')
   @ApiResponse({ type: EventResponseDto })
   @UseGuards(AccessEventGuard)
-  async getEventById(@Param('id') eventId: string): Promise<EventResponseDto> {
+  async getEventById(@Param('eventId') eventId: string): Promise<EventResponseDto> {
     const event = await this.eventService.getEventById(eventId);
     return plainToInstance(EventResponseDto, event);
   }
@@ -64,14 +64,14 @@ export class EventController {
   @Put(':eventId')
   @HttpCode(HttpStatus.NO_CONTENT)
   @UseGuards(AccessEventGuard)
-  async updateEvent(@Param('id') eventId: string, @Body() dto: UpdateEventRequestDto): Promise<void> {
+  async updateEvent(@Param('eventId') eventId: string, @Body() dto: UpdateEventRequestDto): Promise<void> {
     await this.eventService.updateEvent(eventId, dto);
   }
 
   @Delete(':eventId')
   @HttpCode(HttpStatus.NO_CONTENT)
   @UseGuards(AccessEventGuard)
-  async deleteEvent(@Param('id') eventId: string): Promise<void> {
+  async deleteEvent(@Param('eventId') eventId: string): Promise<void> {
     await this.eventService.deleteEvent(eventId);
   }
 }
