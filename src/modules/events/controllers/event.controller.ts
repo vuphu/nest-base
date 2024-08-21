@@ -2,6 +2,7 @@ import { Event } from '../models';
 import { EventService } from '../services';
 import { EventResponseDto } from '../dtos/responses';
 import { CreateEventRequestDto, UpdateEventRequestDto } from '../dtos/requests';
+import { AccessEventGuard } from '../guards';
 import {
   ApiPaginationResponse,
   generatePaginateResponse,
@@ -28,7 +29,6 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
-import { AccessEventGuard } from '../guards';
 
 @Controller('events')
 @ApiTags('Events')
