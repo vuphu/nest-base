@@ -10,7 +10,7 @@ import {
   PaginateOptionsDto,
   ResponseInterceptor,
 } from '@/common';
-import { JwtAuthGuard } from '@/modules/auth/guards';
+import { AuthGuard } from '@/modules/auth/guards';
 import { CurrentUser } from '@/modules/auth/decorators';
 import { AuthUser } from '@/modules/auth/types';
 import {
@@ -33,7 +33,7 @@ import { plainToInstance } from 'class-transformer';
 @Controller('events')
 @ApiTags('Events')
 @ApiBearerAuth()
-@UseGuards(JwtAuthGuard)
+@UseGuards(AuthGuard)
 export class EventController {
   constructor(private eventService: EventService) {}
 
