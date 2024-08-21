@@ -1,14 +1,11 @@
+import { BaseResponseDto } from '@/common';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsOptional, IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
-export class SignUpRequestDto {
-  @ApiProperty()
-  @IsEmail()
-  email: string;
-
+export class UserResponseDto extends BaseResponseDto {
   @ApiProperty()
   @IsString()
-  password: string;
+  email: string;
 
   @ApiProperty()
   @IsString()

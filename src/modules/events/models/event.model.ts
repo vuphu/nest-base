@@ -14,4 +14,7 @@ export class Event extends BaseModel {
 
   @Column({ nullable: true })
   description: string;
+
+  @Column({ type: 'uuid' })
+  userId: string;
 }

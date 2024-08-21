@@ -10,6 +10,8 @@ export class CreateUserTable1653753770949 implements MigrationInterface {
           ColumnGenerator.primaryUUID(),
           ColumnGenerator.builder().string('email').make(),
           ColumnGenerator.builder().string('password').make(),
+          ColumnGenerator.builder().string('first_name').nullable().make(),
+          ColumnGenerator.builder().string('last_name').nullable().make(),
           ColumnGenerator.createdAt(),
           ColumnGenerator.updatedAt(),
           ColumnGenerator.deletedAt(),

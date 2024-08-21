@@ -1,6 +1,6 @@
 import { AuthService } from '../services';
-import { Token } from '../types';
-import { SignInRequestDto, RegisterRequestDto, TokenResponseDto } from '../dtos';
+import { SignInResponse } from '../types';
+import { SignInRequestDto, SignUpRequestDto, SignInResponseDto } from '../dtos';
 import { ResponseInterceptor } from '@/common';
 import { Body, Controller, HttpCode, HttpStatus, Post, UseInterceptors } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -10,16 +10,16 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Post('register')
+  @Post('sign-up')
   @HttpCode(HttpStatus.NO_CONTENT)
-  createUser(@Body() dto: RegisterRequestDto): Promise<void> {
-    return this.authService.registerUser(dto);
+  signUp(@Body() dto: SignUpRequestDto): Promise<void> {
+    return this.authService.signUp(dto);
   }
 
   @Post('sign-in')
-  @ApiResponse({ type: TokenResponseDto })
-  @UseInterceptors(new ResponseInterceptor(TokenResponseDto))
-  async signIn(@Body() dto: SignInRequestDto): Promise<Token> {
-    return this.authService.verifyAndGenerateToken(dto);
+  @ApiResponse({ type: SignInResponseDto })
+  @UseInterceptors(new ResponseInterceptor(SignInResponseDto))
+  async signIn(@Body() dto: SignInRequestDto): Promise<SignInResponse> {
+    return this.authService.signIn(dto);
   }
 }

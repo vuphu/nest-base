@@ -1,4 +1,6 @@
 {
-  "user_already_exist": "Người dùng đã tồn tại",
-  "invalid_user_credentials": "Tên đăng nhập hoặc mật khẩu không đúng"
+  "users": {
+    "email_already_in_use": "Địa chỉ email đã tồn tại",
+    "invalid_credentials": "Thong tin đăng nhập không đúng"
+  }
 }

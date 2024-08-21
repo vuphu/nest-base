@@ -1,0 +1,24 @@
+import { UserService } from '../services';
+import { User } from '../models';
+import { UserResponseDto } from '../dtos';
+import { JwtUser } from '@/modules/auth/types';
+import { JwtAuthGuard } from '@/modules/auth/guards';
+import { CurrentUser } from '@/modules/auth/decorators';
+import { ResponseInterceptor } from '@/common';
+import { Controller, Get, UseGuards, UseInterceptors } from '@nestjs/common';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+
+@Controller('users')
+@ApiTags('Users')
+@UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
+export class UserController {
+  constructor(private userService: UserService) {}
+
+  @Get('me')
+  @ApiResponse({ type: UserResponseDto })
+  @UseInterceptors(new ResponseInterceptor(UserResponseDto))
+  getUserInfo(@CurrentUser() user: JwtUser): Promise<User> {
+    return this.userService.findUserById(user.id);
+  }
+}

@@ -1,4 +1,6 @@
 {
-  "user_already_exist": "User already exists",
-  "invalid_user_credentials": "User credentials is not valid"
+  "users": {
+    "email_already_in_use": "The email is already in use",
+    "invalid_credentials": "User credentials is not valid"
+  }
 }

@@ -1,6 +1,5 @@
 import { User } from '../models';
 import { UserRepository } from '../repositories';
-import { CreateUserDto } from '../dtos/requests';
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import * as brcypt from 'bcrypt';
 import { omit } from 'lodash';
@@ -9,29 +8,33 @@ import { omit } from 'lodash';
 export class UserService {
   constructor(private userRepository: UserRepository) {}
 
-  async getUserById(userId: string): Promise<User> {
+  async findUserById(userId: string): Promise<User> {
     return this.userRepository.findOneBy({ id: userId });
   }
 
-  async createUser(dto: CreateUserDto): Promise<void> {
-    const { email, password } = dto;
+  async createUser(partialUser: Partial<User>): Promise<void> {
+    const { email, password } = partialUser;
 
-    const isUserExisted = await this.userRepository.exist({ where: { email } });
-    if (isUserExisted) {
-      throw new BadRequestException({ key: 'errors.user_already_exist' });
+    const isEmailUsed = await this.userRepository.exists({ where: { email } });
+    if (isEmailUsed) {
+      throw new BadRequestException({ key: 'errors.users.email_already_in_use' });
     }
 
     await this.userRepository.insert({
-      email,
+      ...partialUser,
       password: await brcypt.hash(password, 10),
     });
   }
 
   async verifyUser(email: string, password: string): Promise<Partial<User>> {
-    const user = await this.userRepository.findOneBy({ email });
+    const user = await this.userRepository
+      .createQueryBuilder('user')
+      .addSelect('user.password')
+      .where({ email })
+      .getOne();
 
     if (!user || !brcypt.compareSync(password, user.password)) {
-      throw new UnauthorizedException({ key: 'errors.invalid_user_credentials' });
+      throw new UnauthorizedException({ key: 'errors.users.invalid_credentials' });
     }
 
     return omit(user, 'password');

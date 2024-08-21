@@ -9,6 +9,12 @@ export class User extends BaseModel {
   @Column({ type: 'character varying' })
   email: string;
 
-  @Column({ type: 'character varying' })
+  @Column({ type: 'character varying', select: false })
   password: string;
+
+  @Column({ type: 'character varying', nullable: true })
+  firstName?: string;
+
+  @Column({ type: 'character varying', nullable: true })
+  lastName?: string;
 }
