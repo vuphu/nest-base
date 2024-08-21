@@ -13,6 +13,6 @@ ENV NODE_ENV production
 USER node
 WORKDIR /home/node
 COPY --from=builder --chown=node:node /home/node/ /home/node/
-EXPOSE 5000
+EXPOSE 3000
 
 CMD ["node", "dist/main.js"]
