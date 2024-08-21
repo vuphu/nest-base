@@ -1,5 +1,5 @@
 import { EventRepository } from '../repositories';
-import { JwtUser } from '@/modules/auth/types';
+import { AuthUser } from '@/modules/auth/types';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { isNil } from 'lodash';
 
@@ -9,7 +9,7 @@ export class AccessEventGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    const user: JwtUser = request.user;
+    const user: AuthUser = request.user;
     const eventId = request.params['eventId'];
 
     if (isNil(user) || isNil(eventId)) {

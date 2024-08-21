@@ -6,15 +6,15 @@ export class User extends BaseModel {
   @PrimaryGeneratedColumn()
   id: string;
 
-  @Column({ type: 'character varying' })
+  @Column()
   email: string;
 
-  @Column({ type: 'character varying', select: false })
+  @Column({ select: false })
   password: string;
 
-  @Column({ type: 'character varying', nullable: true })
+  @Column({ nullable: true })
   firstName?: string;
 
-  @Column({ type: 'character varying', nullable: true })
+  @Column({ nullable: true })
   lastName?: string;
 }

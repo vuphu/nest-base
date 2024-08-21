@@ -2,14 +2,14 @@ import { EventRepository } from '../repositories';
 import { Event } from '../models';
 import { CreateEventRequestDto, UpdateEventRequestDto } from '../dtos/requests';
 import { PaginateCollection, PaginateOptions } from '@/common';
-import { JwtUser } from '@/modules/auth/types';
+import { AuthUser } from '@/modules/auth/types';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class EventService {
   constructor(private eventRepository: EventRepository) {}
 
-  paginateEvents(user: JwtUser, paginateOptions: PaginateOptions): Promise<PaginateCollection<Event>> {
+  paginateEvents(user: AuthUser, paginateOptions: PaginateOptions): Promise<PaginateCollection<Event>> {
     return this.eventRepository.paginate({ where: { userId: user.id } }, paginateOptions);
   }
 
@@ -17,7 +17,7 @@ export class EventService {
     return this.eventRepository.findOneBy({ id: eventId });
   }
 
-  async createEvent(user: JwtUser, dto: CreateEventRequestDto): Promise<void> {
+  async createEvent(user: AuthUser, dto: CreateEventRequestDto): Promise<void> {
     await this.eventRepository.createOne({ ...dto, userId: user.id });
   }
 

@@ -4,6 +4,7 @@ import { UserService } from '@/modules/users/services';
 import { User } from '@/modules/users/models';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { isNil } from 'lodash';
 
 @Injectable()
 export class AuthService {
@@ -14,14 +15,10 @@ export class AuthService {
 
   async verifyPayload(payload: JwtPayload): Promise<User> {
     const user = await this.userService.findUserById(payload.id);
-    if (!user) {
+    if (isNil(user)) {
       throw new UnauthorizedException();
     }
     return user;
-  }
-
-  async verifyUser(email: string, password: string): Promise<Partial<User>> {
-    return this.userService.verifyUser(email, password);
   }
 
   async signUp(dto: SignUpRequestDto): Promise<void> {

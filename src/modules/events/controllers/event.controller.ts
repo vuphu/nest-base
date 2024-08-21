@@ -12,7 +12,7 @@ import {
 } from '@/common';
 import { JwtAuthGuard } from '@/modules/auth/guards';
 import { CurrentUser } from '@/modules/auth/decorators';
-import { JwtUser } from '@/modules/auth/types';
+import { AuthUser } from '@/modules/auth/types';
 import {
   Body,
   Controller,
@@ -41,7 +41,7 @@ export class EventController {
   @ApiPaginationResponse(EventResponseDto)
   @UseInterceptors(new ResponseInterceptor(generatePaginateResponse(EventResponseDto)))
   async paginateEvents(
-    @CurrentUser() user: JwtUser,
+    @CurrentUser() user: AuthUser,
     @Query() paginateOptions: PaginateOptionsDto,
   ): Promise<PaginateCollection<Event>> {
     return this.eventService.paginateEvents(user, paginateOptions);
@@ -57,7 +57,7 @@ export class EventController {
 
   @Post()
   @HttpCode(HttpStatus.NO_CONTENT)
-  async createEvent(@CurrentUser() user: JwtUser, @Body() dto: CreateEventRequestDto): Promise<void> {
+  async createEvent(@CurrentUser() user: AuthUser, @Body() dto: CreateEventRequestDto): Promise<void> {
     await this.eventService.createEvent(user, dto);
   }
 

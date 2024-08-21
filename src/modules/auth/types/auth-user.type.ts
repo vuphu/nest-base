@@ -1,4 +1,4 @@
-export type JwtUser = {
+export type AuthUser = {
   id: string;
   email: string;
   firstName?: string;

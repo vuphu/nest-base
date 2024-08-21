@@ -1,7 +1,7 @@
 import { UserService } from '../services';
 import { User } from '../models';
 import { UserResponseDto } from '../dtos';
-import { JwtUser } from '@/modules/auth/types';
+import { AuthUser } from '@/modules/auth/types';
 import { JwtAuthGuard } from '@/modules/auth/guards';
 import { CurrentUser } from '@/modules/auth/decorators';
 import { ResponseInterceptor } from '@/common';
@@ -18,7 +18,7 @@ export class UserController {
   @Get('me')
   @ApiResponse({ type: UserResponseDto })
   @UseInterceptors(new ResponseInterceptor(UserResponseDto))
-  getUserInfo(@CurrentUser() user: JwtUser): Promise<User> {
+  getUserInfo(@CurrentUser() user: AuthUser): Promise<User> {
     return this.userService.findUserById(user.id);
   }
 }
