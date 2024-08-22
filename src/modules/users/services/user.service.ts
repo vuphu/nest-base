@@ -2,7 +2,7 @@ import { User } from '../models';
 import { UserRepository } from '../repositories';
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import * as brcypt from 'bcrypt';
-import { omit } from 'lodash';
+import { isNil, omit } from 'lodash';
 
 @Injectable()
 export class UserService {
@@ -17,7 +17,7 @@ export class UserService {
 
     const isEmailUsed = await this.userRepository.exists({ where: { email } });
     if (isEmailUsed) {
-      throw new BadRequestException({ key: 'errors.users.email_already_in_use' });
+      throw new BadRequestException({ key: 'errors.modules.users.email_already_in_use' });
     }
 
     await this.userRepository.insert({
@@ -33,8 +33,8 @@ export class UserService {
       .where({ email })
       .getOne();
 
-    if (!user || !brcypt.compareSync(password, user.password)) {
-      throw new UnauthorizedException({ key: 'errors.users.invalid_credentials' });
+    if (isNil(user) || !brcypt.compareSync(password, user.password)) {
+      throw new UnauthorizedException({ key: 'errors.modules.users.invalid_credentials' });
     }
 
     return omit(user, 'password');

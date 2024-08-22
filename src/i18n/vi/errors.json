@@ -1,6 +1,8 @@
 {
-  "users": {
-    "email_already_in_use": "Địa chỉ email đã tồn tại",
-    "invalid_credentials": "Thong tin đăng nhập không đúng"
+  "modules": {
+    "users": {
+      "email_already_in_use": "Địa chỉ email đã tồn tại",
+      "invalid_credentials": "Thong tin đăng nhập không đúng"
+    }
   }
 }
