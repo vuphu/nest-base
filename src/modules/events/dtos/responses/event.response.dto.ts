@@ -1,4 +1,4 @@
-import { BaseResponseDto } from '@/common/dtos/responses/base.dto';
+import { BaseResponseDto } from '@/common';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsDate, IsString } from 'class-validator';
 

@@ -21,7 +21,7 @@ export class ResponseInterceptor<T extends object> implements NestInterceptor {
         const object = plainToClass(this.classType, data);
         const objects = isArray(object) ? object : [object];
         for (const item of objects) {
-          const errors = await validate(item, { stopAtFirstError: true });
+          const errors = await validate(item, { stopAtFirstError: true, whitelist: true });
           if (errors.length > 0) {
             console.error(errors);
             throw new InternalServerErrorException('Validate Exception');

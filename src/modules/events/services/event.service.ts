@@ -13,7 +13,7 @@ export class EventService {
     return this.eventRepository.paginate({ where: { userId: user.id } }, paginateOptions);
   }
 
-  getEventById(eventId: string): Promise<Event> {
+  findEventById(eventId: string): Promise<Event> {
     return this.eventRepository.findOneBy({ id: eventId });
   }
 

@@ -50,8 +50,8 @@ export class EventController {
   @Get(':eventId')
   @ApiResponse({ type: EventResponseDto })
   @UseGuards(AccessEventGuard)
-  async getEventById(@Param('eventId') eventId: string): Promise<EventResponseDto> {
-    const event = await this.eventService.getEventById(eventId);
+  async findEventById(@Param('eventId') eventId: string): Promise<EventResponseDto> {
+    const event = await this.eventService.findEventById(eventId);
     return plainToInstance(EventResponseDto, event);
   }
 
