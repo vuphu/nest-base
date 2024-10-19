@@ -4,3 +4,4 @@ export * from './dtos';
 export * from './interceptors';
 export * from './types';
 export * from './helpers';
+export * from './use-cases';

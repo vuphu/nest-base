@@ -1,4 +1,3 @@
-import { getRequestLang } from '../helpers';
 import { I18nService } from 'nestjs-i18n';
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException } from '@nestjs/common';
 import { Response } from 'express';
@@ -11,19 +10,19 @@ export class TranslateFilter implements ExceptionFilter {
     const context = host.switchToHttp();
     const response = context.getResponse<Response>();
     const statusCode = exception.getStatus();
-
-    let message = exception.getResponse() as {
+    const error = exception.getResponse() as {
       key: string;
       args: Record<string, any>;
     };
 
     try {
-      message = this.i18n.translate(message.key, {
-        lang: getRequestLang(context),
-        args: message.args,
+      const message = this.i18n.translate(error.key, {
+        lang: context.getRequest().headers['lang'] || context.getRequest().i18nLang,
+        args: error.args,
       });
-    } catch {}
-
-    response.status(statusCode).json({ statusCode, message });
+      response.status(statusCode).json({ statusCode, message });
+    } catch {
+      response.status(statusCode).json(error);
+    }
   }
 }

@@ -12,7 +12,7 @@ export class UserService {
     return this.userRepository.findOneBy({ id: userId });
   }
 
-  async createUser(partialUser: Partial<User>): Promise<void> {
+  async createUser(partialUser: Partial<User>): Promise<User> {
     const { email, password } = partialUser;
 
     const isEmailUsed = await this.userRepository.exists({ where: { email } });
@@ -20,7 +20,7 @@ export class UserService {
       throw new BadRequestException({ key: 'errors.modules.users.email_already_in_use' });
     }
 
-    await this.userRepository.insert({
+    return this.userRepository.createOne({
       ...partialUser,
       password: await brcypt.hash(password, 10),
     });
