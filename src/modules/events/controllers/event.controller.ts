@@ -28,7 +28,6 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { plainToInstance } from 'class-transformer';
 
 @Controller('events')
 @ApiTags('Events')
@@ -50,9 +49,8 @@ export class EventController {
   @Get(':eventId')
   @ApiResponse({ type: EventResponseDto })
   @UseGuards(AccessEventGuard)
-  async findEventById(@Param('eventId') eventId: string): Promise<EventResponseDto> {
-    const event = await this.eventService.findEventById(eventId);
-    return plainToInstance(EventResponseDto, event);
+  async findEventById(@Param('eventId') eventId: string): Promise<Event> {
+    return this.eventService.findEventById(eventId);
   }
 
   @Post()
