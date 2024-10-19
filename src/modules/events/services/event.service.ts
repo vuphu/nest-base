@@ -17,12 +17,25 @@ export class EventService {
     return this.eventRepository.findOneBy({ id: eventId });
   }
 
-  async createEvent(user: AuthUser, dto: CreateEventRequestDto): Promise<void> {
-    await this.eventRepository.createOne({ ...dto, userId: user.id });
+  async createEvent(user: AuthUser, dto: CreateEventRequestDto): Promise<Event> {
+    const partialEvent: Partial<Event> = {
+      name: dto.name,
+      startDate: dto.startDate,
+      dueDate: dto.dueDate,
+      description: dto.description,
+      userId: user.id,
+    };
+    return this.eventRepository.createOne(partialEvent);
   }
 
   async updateEvent(eventId: string, dto: UpdateEventRequestDto): Promise<void> {
-    await this.eventRepository.update({ id: eventId }, dto);
+    const partialEvent: Partial<Event> = {
+      name: dto.name,
+      startDate: dto.startDate,
+      dueDate: dto.dueDate,
+      description: dto.description,
+    };
+    await this.eventRepository.update(eventId, partialEvent);
   }
 
   async deleteEvent(eventId: string): Promise<void> {

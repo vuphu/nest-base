@@ -54,9 +54,10 @@ export class EventController {
   }
 
   @Post()
-  @HttpCode(HttpStatus.NO_CONTENT)
-  async createEvent(@CurrentUser() user: AuthUser, @Body() dto: CreateEventRequestDto): Promise<void> {
-    await this.eventService.createEvent(user, dto);
+  @ApiResponse({ type: EventResponseDto })
+  @UseGuards(AccessEventGuard)
+  async createEvent(@CurrentUser() user: AuthUser, @Body() dto: CreateEventRequestDto): Promise<Event> {
+    return this.eventService.createEvent(user, dto);
   }
 
   @Put(':eventId')
