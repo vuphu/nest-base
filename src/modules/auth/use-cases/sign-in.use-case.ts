@@ -1,21 +1,22 @@
-import { SignUpRequestDto } from '../dtos';
+import { SignInRequestDto } from '../dtos';
 import { SignInResponse } from '../types';
 import { AuthService } from '../services';
 import { UserService } from '@/modules/users/services';
-import { UseCase } from '@/common';
-import { Injectable } from '@nestjs/common';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
-@Injectable()
-export class SignInUseCase extends UseCase {
+export class SignInUseCase {
+  constructor(public dto: SignInRequestDto) {}
+}
+
+@CommandHandler(SignInUseCase)
+export class SignInHandler implements ICommandHandler<SignInUseCase, SignInResponse> {
   constructor(
     private authService: AuthService,
     private userService: UserService,
-  ) {
-    super();
-  }
+  ) {}
 
-  async execute(dto: SignUpRequestDto): Promise<SignInResponse> {
-    const { email, password } = dto;
+  async execute(command: SignInUseCase): Promise<SignInResponse> {
+    const { email, password } = command.dto;
     const user = await this.userService.verifyUser(email, password);
     return this.authService.generateAuthTokens(user);
   }

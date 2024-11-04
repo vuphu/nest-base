@@ -1,23 +1,26 @@
 import { RefreshTokenRequestDto } from '../dtos';
 import { JwtPayload, SignInResponse } from '../types';
 import { AuthService } from '../services';
-import { UseCase } from '@/common';
 import { env } from '@/configs';
 import { UserService } from '@/modules/users/services';
 import { JwtService, TokenExpiredError } from '@nestjs/jwt';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { UnauthorizedException } from '@nestjs/common';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
-@Injectable()
-export class RefreshTokenUseCase extends UseCase {
+export class RefreshTokenUseCase {
+  constructor(public dto: RefreshTokenRequestDto) {}
+}
+
+@CommandHandler(RefreshTokenUseCase)
+export class RefreshTokenHandler implements ICommandHandler<RefreshTokenUseCase, SignInResponse> {
   constructor(
     private jwtService: JwtService,
     private userService: UserService,
     private authService: AuthService,
-  ) {
-    super();
-  }
+  ) {}
 
-  async execute(dto: RefreshTokenRequestDto): Promise<SignInResponse> {
+  async execute(command: RefreshTokenUseCase): Promise<SignInResponse> {
+    const { dto } = command;
     try {
       const authPayload: JwtPayload = await this.jwtService.verifyAsync(dto.token, {
         secret: env.JWT.REFRESH_TOKEN.SECRET,

@@ -3,6 +3,7 @@ import { EventService } from '../services';
 import { EventResponseDto } from '../dtos/responses';
 import { CreateEventRequestDto, UpdateEventRequestDto } from '../dtos/requests';
 import { AccessEventGuard } from '../guards';
+import { CreateEventUseCase } from '../use-cases';
 import {
   ApiPaginationResponse,
   generatePaginateResponse,
@@ -28,13 +29,17 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { CommandBus } from '@nestjs/cqrs';
 
 @Controller('events')
 @ApiTags('Events')
 @ApiBearerAuth()
 @UseGuards(AuthGuard)
 export class EventController {
-  constructor(private eventService: EventService) {}
+  constructor(
+    private eventService: EventService,
+    private commandBus: CommandBus,
+  ) {}
 
   @Get()
   @ApiPaginationResponse(EventResponseDto)
@@ -55,9 +60,8 @@ export class EventController {
 
   @Post()
   @ApiResponse({ type: EventResponseDto })
-  @UseGuards(AccessEventGuard)
   async createEvent(@CurrentUser() user: AuthUser, @Body() dto: CreateEventRequestDto): Promise<Event> {
-    return this.eventService.createEvent(user, dto);
+    return this.commandBus.execute(new CreateEventUseCase(dto, user));
   }
 
   @Put(':eventId')
