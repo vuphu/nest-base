@@ -1,5 +1,5 @@
-import { AuthService } from '../services';
-import { JwtPayload } from '../types';
+import { AuthService } from '../../services';
+import { JwtPayload } from '../../types';
 import { env } from '@/configs';
 import { User } from '@/modules/users/models';
 import { Injectable } from '@nestjs/common';
