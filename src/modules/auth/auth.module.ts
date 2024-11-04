@@ -1,6 +1,6 @@
 import { AuthController } from './controllers';
 import { AuthService } from './services';
-import { JwtStrategy } from './extensions/strategies';
+import { JwtStrategy } from './extensions/auth-strategies';
 import { RefreshTokenHandler, SignInHandler, SignUpHandler } from './use-cases';
 import { JwtConfig } from '@/configs';
 import { UserModule } from '@/modules/users';
