@@ -1,6 +1,6 @@
 import { EventRepository } from '../repositories';
 import { Event } from '../models';
-import { CreateEventRequestDto, UpdateEventRequestDto } from '../dtos/requests';
+import { UpdateEventRequestDto } from '../dtos/requests';
 import { PaginateCollection, PaginateOptions } from '@/common';
 import { AuthUser } from '@/modules/auth/types';
 import { Injectable } from '@nestjs/common';
@@ -15,17 +15,6 @@ export class EventService {
 
   findEventById(eventId: string): Promise<Event> {
     return this.eventRepository.findOneBy({ id: eventId });
-  }
-
-  async createEvent(user: AuthUser, dto: CreateEventRequestDto): Promise<Event> {
-    const partialEvent: Partial<Event> = {
-      name: dto.name,
-      startDate: dto.startDate,
-      dueDate: dto.dueDate,
-      description: dto.description,
-      userId: user.id,
-    };
-    return this.eventRepository.createOne(partialEvent);
   }
 
   async updateEvent(eventId: string, dto: UpdateEventRequestDto): Promise<void> {
