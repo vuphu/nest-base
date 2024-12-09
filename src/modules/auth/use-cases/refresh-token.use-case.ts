@@ -6,6 +6,8 @@ import { UserService } from '@/modules/users/services';
 import { JwtService, TokenExpiredError } from '@nestjs/jwt';
 import { UnauthorizedException } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { transform } from '@/common';
+import { camelCase } from 'lodash';
 
 export class RefreshTokenUseCase {
   constructor(public dto: RefreshTokenRequestDto) {}
@@ -22,11 +24,12 @@ export class RefreshTokenHandler implements ICommandHandler<RefreshTokenUseCase,
   async execute(command: RefreshTokenUseCase): Promise<SignInResponse> {
     const { dto } = command;
     try {
-      const authPayload: JwtPayload = await this.jwtService.verifyAsync(dto.token, {
-        secret: env.JWT.REFRESH_TOKEN.SECRET,
-      });
+      const authPayload: JwtPayload = transform(
+        this.jwtService.verify(dto.token, { secret: env.JWT.REFRESH_TOKEN.SECRET }),
+        camelCase,
+      );
       const user = await this.userService.findUserById(authPayload.sub);
-      return this.authService.generateAuthTokens(user);
+      return this.authService.generateAuthTokens(user, authPayload.sessionId);
     } catch (exception) {
       if (exception instanceof TokenExpiredError) {
         throw new UnauthorizedException();

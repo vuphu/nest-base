@@ -10,7 +10,7 @@ export class User extends BaseModel {
   email: string;
 
   @Column({ select: false })
-  password: string;
+  password?: string;
 
   @Column({ nullable: true })
   firstName?: string;

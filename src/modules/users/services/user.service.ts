@@ -26,7 +26,7 @@ export class UserService {
     });
   }
 
-  async verifyUser(email: string, password: string): Promise<Partial<User>> {
+  async verifyUser(email: string, password: string): Promise<User> {
     const user = await this.userRepository
       .createQueryBuilder('user')
       .addSelect('user.password')

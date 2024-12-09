@@ -1,6 +1,6 @@
 import { BaseResponseDto } from '@/common';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDate, IsString } from 'class-validator';
+import { IsDate, IsOptional, IsString } from 'class-validator';
 
 export class EventResponseDto extends BaseResponseDto {
   @ApiProperty()
@@ -17,5 +17,6 @@ export class EventResponseDto extends BaseResponseDto {
 
   @ApiProperty()
   @IsString()
-  description: string;
+  @IsOptional()
+  description?: string;
 }

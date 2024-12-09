@@ -4,25 +4,43 @@ import { User } from '@/modules/users/models';
 import { env } from '@/settings';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { isNil } from 'lodash';
+import { isNil, snakeCase } from 'lodash';
+import { AuthSessionService } from './auth-session.service';
+import { transform } from '@/common';
+import dayjs from 'dayjs';
 
 @Injectable()
 export class AuthService {
   constructor(
     private userService: UserService,
+    private authSessionService: AuthSessionService,
     private jwtService: JwtService,
   ) {}
 
   async verifyPayload(payload: JwtPayload): Promise<User> {
-    const user = await this.userService.findUserById(payload.sub);
-    if (isNil(user)) {
+    const [user, session] = await Promise.all([
+      this.userService.findUserById(payload.sub),
+      this.authSessionService.findSession(payload.sessionId),
+    ]);
+    if (isNil(user) || isNil(session)) {
+      throw new UnauthorizedException();
+    }
+    if (session.userId !== user.id || payload.iat < dayjs(session.issuedAt).unix()) {
       throw new UnauthorizedException();
     }
     return user;
   }
 
-  async generateAuthTokens(user: Partial<User>): Promise<SignInResponse> {
-    const payload: JwtPayload = { sub: user.id };
+  async generateAuthTokens(user: User, sessionId?: string): Promise<SignInResponse> {
+    if (isNil(sessionId)) {
+      const session = await this.authSessionService.createSession(user.id);
+      sessionId = session.id;
+    } else {
+      await this.authSessionService.refreshSession(user.id, sessionId);
+    }
+
+    const payload: object = transform(<JwtPayload>{ sub: user.id, sessionId }, snakeCase);
+
     return {
       accessToken: await this.jwtService.signAsync(payload),
       refreshToken: this.jwtService.sign(payload, {
