@@ -11,7 +11,7 @@ export type SortOptions = {
 };
 
 export type PaginateCollection<T> = {
-  total: number;
+  totalCount: number;
   page: number;
   limit: number;
   items: T[];

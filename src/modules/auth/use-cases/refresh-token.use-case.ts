@@ -1,7 +1,7 @@
 import { RefreshTokenRequestDto } from '../dtos';
 import { JwtPayload, SignInResponse } from '../types';
 import { AuthService } from '../services';
-import { env } from '@/configs';
+import { env } from '@/settings';
 import { UserService } from '@/modules/users/services';
 import { JwtService, TokenExpiredError } from '@nestjs/jwt';
 import { UnauthorizedException } from '@nestjs/common';
@@ -25,7 +25,7 @@ export class RefreshTokenHandler implements ICommandHandler<RefreshTokenUseCase,
       const authPayload: JwtPayload = await this.jwtService.verifyAsync(dto.token, {
         secret: env.JWT.REFRESH_TOKEN.SECRET,
       });
-      const user = await this.userService.findUserById(authPayload.id);
+      const user = await this.userService.findUserById(authPayload.sub);
       return this.authService.generateAuthTokens(user);
     } catch (exception) {
       if (exception instanceof TokenExpiredError) {

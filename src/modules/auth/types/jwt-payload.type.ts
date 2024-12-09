@@ -1,3 +1,3 @@
 export type JwtPayload = {
-  id: string;
+  sub: string;
 };

@@ -1,4 +1,4 @@
-import { ColumnGenerator } from '@/add-ons/typeorm-extension';
+import { ColumnGenerator } from '@/add-ons/typeorm';
 import { MigrationInterface, QueryRunner, Table, TableIndex } from 'typeorm';
 
 export class CreateUserTable1653753770949 implements MigrationInterface {

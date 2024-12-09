@@ -1,7 +1,7 @@
 import { JwtPayload, SignInResponse } from '../types';
 import { UserService } from '@/modules/users/services';
 import { User } from '@/modules/users/models';
-import { env } from '@/configs';
+import { env } from '@/settings';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { isNil } from 'lodash';
@@ -14,7 +14,7 @@ export class AuthService {
   ) {}
 
   async verifyPayload(payload: JwtPayload): Promise<User> {
-    const user = await this.userService.findUserById(payload.id);
+    const user = await this.userService.findUserById(payload.sub);
     if (isNil(user)) {
       throw new UnauthorizedException();
     }
@@ -22,7 +22,7 @@ export class AuthService {
   }
 
   async generateAuthTokens(user: Partial<User>): Promise<SignInResponse> {
-    const payload: JwtPayload = { id: user.id };
+    const payload: JwtPayload = { sub: user.id };
     return {
       accessToken: await this.jwtService.signAsync(payload),
       refreshToken: this.jwtService.sign(payload, {

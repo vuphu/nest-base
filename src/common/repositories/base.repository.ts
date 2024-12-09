@@ -17,11 +17,11 @@ export class BaseRepository<T extends BaseModel> extends Repository<T> {
     const { page = 1, limit = 50 } = params;
     const skip = (page - 1) * limit;
 
-    const [items, total] = await Promise.all([
+    const [items, totalCount] = await Promise.all([
       await this.find({ ...options, skip: Number(skip), take: Number(limit) }),
       this.count(options),
     ]);
 
-    return { total, items, page, limit };
+    return { totalCount, items, page, limit };
   }
 }

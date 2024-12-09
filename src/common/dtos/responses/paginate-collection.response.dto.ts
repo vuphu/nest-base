@@ -9,7 +9,7 @@ export class PaginateCollectionDto<T> {
 
   @ApiProperty()
   @IsNumber()
-  total: number;
+  totalCount: number;
 
   @ApiProperty()
   @IsNumber()
