@@ -1,17 +1,22 @@
 import { AppController } from './app.controller';
-import { DatabaseSetting, I18nSetting } from './settings';
+import { ClsSetting, DatabaseSetting, I18nSetting } from './settings';
 import { AuthModule, EventModule, UserModule } from './modules';
 import { TranslateFilter } from './common/middlewares';
 import { Module } from '@nestjs/common';
-import { APP_FILTER } from '@nestjs/core';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
+import { RequestInfoInterceptor } from './common/interceptors/request-info.interceptor';
 
 @Module({
-  imports: [DatabaseSetting, I18nSetting, EventModule, UserModule, AuthModule],
+  imports: [DatabaseSetting, I18nSetting, ClsSetting, EventModule, UserModule, AuthModule],
   controllers: [AppController],
   providers: [
     {
       provide: APP_FILTER,
       useClass: TranslateFilter,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: RequestInfoInterceptor,
     },
   ],
 })
