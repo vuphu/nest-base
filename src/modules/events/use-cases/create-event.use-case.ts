@@ -4,6 +4,7 @@ import { EventCreatedEvent } from '../cqrs/event-created-event.cqrs';
 import { EventRepository } from '../repositories';
 import { AuthUser } from '@/modules/auth/types';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
+import { Transactional } from '@nestjs-cls/transactional';
 
 export class CreateEventUseCase {
   constructor(
@@ -19,6 +20,7 @@ export class CreateEventHandler implements ICommandHandler<CreateEventUseCase, E
     private eventBus: EventBus,
   ) {}
 
+  @Transactional()
   async execute(command: CreateEventUseCase): Promise<Event> {
     const { dto, user } = command;
 

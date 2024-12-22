@@ -1,6 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { AuthSessionService } from '../services/auth-session.service';
 import { SignOutRequestDto } from '../dtos';
+import { Transactional } from '@nestjs-cls/transactional';
 
 export class SignOutUseCase {
   constructor(
@@ -14,6 +15,7 @@ export class SignOutUseCase {
 export class SignOutHandler implements ICommandHandler<SignOutUseCase, void> {
   constructor(private authSessionService: AuthSessionService) {}
 
+  @Transactional()
   async execute(command: SignOutUseCase): Promise<void> {
     const { userId, sessionId, dto } = command;
     if (dto.isGlobal) {

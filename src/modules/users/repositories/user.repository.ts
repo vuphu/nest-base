@@ -1,12 +1,12 @@
 import { User } from '../models';
 import { BaseRepository } from '@/common';
 import { Injectable } from '@nestjs/common';
-import { DataSource } from 'typeorm';
-import { InjectDataSource } from '@nestjs/typeorm';
+import { TransactionHost } from '@nestjs-cls/transactional';
+import { TransactionalAdapterTypeOrm } from '@nestjs-cls/transactional-adapter-typeorm';
 
 @Injectable()
 export class UserRepository extends BaseRepository<User> {
-  constructor(@InjectDataSource() dataSource: DataSource) {
-    super(User, dataSource.createEntityManager());
+  constructor(txHost: TransactionHost<TransactionalAdapterTypeOrm>) {
+    super(txHost, User);
   }
 }

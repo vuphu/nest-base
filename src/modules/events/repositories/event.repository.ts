@@ -1,12 +1,12 @@
 import { Event } from '../models';
 import { BaseRepository } from '@/common';
-import { DataSource } from 'typeorm';
 import { Injectable } from '@nestjs/common';
-import { InjectDataSource } from '@nestjs/typeorm';
+import { TransactionHost } from '@nestjs-cls/transactional';
+import { TransactionalAdapterTypeOrm } from '@nestjs-cls/transactional-adapter-typeorm';
 
 @Injectable()
 export class EventRepository extends BaseRepository<Event> {
-  constructor(@InjectDataSource() dataSource: DataSource) {
-    super(Event, dataSource.createEntityManager());
+  constructor(txHost: TransactionHost<TransactionalAdapterTypeOrm>) {
+    super(txHost, Event);
   }
 }
