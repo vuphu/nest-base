@@ -31,7 +31,6 @@ export class BaseRepository<T extends BaseModel> extends Repository<T> {
   }
 }
 
-// Override entity manager
 Object.defineProperty(BaseRepository.prototype, 'manager', {
   get() {
     return this.txHost.tx.getRepository(this._target).manager;
