@@ -3,5 +3,5 @@ import { JwtModule } from '@nestjs/jwt';
 
 export const JwtSetting = JwtModule.register({
   secret: env.JWT.ACCESS_TOKEN.SECRET,
-  signOptions: { expiresIn: '1d' },
+  signOptions: { expiresIn: env.JWT.ACCESS_TOKEN.EXPIRES },
 });

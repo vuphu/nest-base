@@ -1,8 +1,12 @@
 {
+  "common": {
+    "forbidden": "Bạn không được phép thực hiện hành động này.",
+    "unauthorized": "Truy cập bị từ chối do xác thực không hợp lệ."
+  },
   "modules": {
     "users": {
-      "email_already_in_use": "Địa chỉ email đã tồn tại",
-      "invalid_credentials": "Thong tin đăng nhập không đúng"
+      "email_already_in_use": "Địa chỉ email đã tồn tại.",
+      "invalid_credentials": "Thong tin đăng nhập không đúng."
     }
   }
 }

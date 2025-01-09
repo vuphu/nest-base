@@ -11,8 +11,8 @@ export const DatabaseSetting = TypeOrmModule.forRoot(<PostgresConnectionOptions>
   password: env.DATABASE_PASSWORD,
   database: env.DATABASE_NAME,
   synchronize: false,
-  entities: [`dist/modules/*/models/*.js`],
-  migrations: [`dist/modules/*/migrations/*.js`],
+  entities: ['dist/modules/*/models/*.js'],
+  migrations: ['dist/modules/*/migrations/*.js'],
   migrationsRun: true,
   namingStrategy: new SnakeNamingStrategy(),
 });

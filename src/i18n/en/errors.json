@@ -1,8 +1,12 @@
 {
+  "common": {
+    "forbidden": "You are not allowed to execute this action.",
+    "unauthorized": "Access denied due to invalid authentication."
+  },
   "modules": {
     "users": {
-      "email_already_in_use": "The email is already in use",
-      "invalid_credentials": "User credentials is not valid"
+      "email_already_in_use": "The email is already in use.",
+      "invalid_credentials": "User credentials is not valid."
     }
   }
 }
