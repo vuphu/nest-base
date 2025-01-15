@@ -1,6 +1,6 @@
-import { TransactionHost } from '@nestjs-cls/transactional';
 import { BaseModel } from '../models';
 import { PaginateCollection, PaginateOptions } from '../types';
+import { TransactionHost } from '@nestjs-cls/transactional';
 import { EntityManager, EntityTarget, FindOneOptions, Repository } from 'typeorm';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { TransactionalAdapterTypeOrm } from '@nestjs-cls/transactional-adapter-typeorm';

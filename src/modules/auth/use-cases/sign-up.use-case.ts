@@ -4,7 +4,6 @@ import { AuthService } from '../services';
 import { UserService } from '@/modules/users/services';
 import { User } from '@/modules/users/models';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { BadRequestException } from '@nestjs/common';
 import { Transactional } from '@nestjs-cls/transactional';
 
 export class SignUpUseCase {

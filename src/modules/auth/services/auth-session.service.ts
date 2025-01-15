@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
 import { AuthSessionRepository } from '../repositories/auth-session.repository';
 import { AuthSession } from '../models/auth-session.model';
+import { Injectable } from '@nestjs/common';
 import dayjs from 'dayjs';
 
 @Injectable()

@@ -1,6 +1,6 @@
+import { AuthSession } from '../models/auth-session.model';
 import { BaseRepository } from '@/common';
 import { Injectable } from '@nestjs/common';
-import { AuthSession } from '../models/auth-session.model';
 import { TransactionHost } from '@nestjs-cls/transactional';
 import { TransactionalAdapterTypeOrm } from '@nestjs-cls/transactional-adapter-typeorm';
 

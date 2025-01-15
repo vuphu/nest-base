@@ -3,10 +3,10 @@ import { JwtPayload, SignInResponse } from '../types';
 import { AuthService } from '../services';
 import { env } from '@/settings';
 import { UserService } from '@/modules/users/services';
+import { transform } from '@/common';
 import { JwtService, TokenExpiredError } from '@nestjs/jwt';
 import { UnauthorizedException } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { transform } from '@/common';
 import { camelCase } from 'lodash';
 
 export class RefreshTokenUseCase {
