@@ -1,12 +1,18 @@
 import { AuthUser, SignInResponse } from '../types';
-import { SignInRequestDto, SignUpRequestDto, SignInResponseDto, RefreshTokenRequestDto, SignOutRequestDto } from '../dtos';
+import {
+  SignInRequestDto,
+  SignUpRequestDto,
+  SignInResponseDto,
+  RefreshTokenRequestDto,
+  SignOutRequestDto,
+} from '../dtos';
 import { RefreshTokenUseCase, SignInUseCase, SignOutUseCase, SignUpUseCase } from '../use-cases';
+import { AuthGuard } from '../guards';
+import { CurrentSessionId, CurrentUser } from '../decorators';
 import { ResponseInterceptor } from '@/common';
 import { Body, Controller, HttpCode, HttpStatus, Post, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CommandBus } from '@nestjs/cqrs';
-import { AuthGuard } from '../guards';
-import { CurrentSessionId, CurrentUser } from '../decorators';
 
 @Controller('auth')
 @ApiTags('Auth')

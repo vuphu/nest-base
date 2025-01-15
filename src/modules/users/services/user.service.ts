@@ -1,4 +1,3 @@
-import { Transactional } from '@nestjs-cls/transactional';
 import { User } from '../models';
 import { UserRepository } from '../repositories';
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';

@@ -1,12 +1,12 @@
+import { AuthSessionService } from './auth-session.service';
 import { JwtPayload, SignInResponse } from '../types';
 import { UserService } from '@/modules/users/services';
 import { User } from '@/modules/users/models';
 import { env } from '@/settings';
+import { transform } from '@/common';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { isNil, snakeCase } from 'lodash';
-import { AuthSessionService } from './auth-session.service';
-import { transform } from '@/common';
 import dayjs from 'dayjs';
 
 @Injectable()

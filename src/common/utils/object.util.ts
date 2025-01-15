@@ -1,5 +1,4 @@
-import _ from 'lodash';
-import { isArray, isObject, map } from 'lodash';
+import _, { isArray, isObject, map } from 'lodash';
 
 export function transform(value: any, transformer: (v: string) => string): any {
   if (isArray(value)) {

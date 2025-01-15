@@ -1,6 +1,6 @@
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { AuthSessionService } from '../services/auth-session.service';
 import { SignOutRequestDto } from '../dtos';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { Transactional } from '@nestjs-cls/transactional';
 
 export class SignOutUseCase {
