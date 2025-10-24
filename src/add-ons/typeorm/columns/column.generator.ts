@@ -15,7 +15,7 @@ export class ColumnGenerator {
   }
 
   static primaryUUID(): TableColumnOptions {
-    return this.builder().uuid('id').primary().default('gen_random_uuid()').make();
+    return this.builder().uuid('id').primary().default('uuidv7()').make();
   }
 
   static builder(): TableColumnTypeBuilder {

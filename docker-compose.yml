@@ -1,7 +1,8 @@
-version: '3.8'
+name: nest-base
+
 services:
   postgres:
-    image: postgres:latest
+    image: postgres:18
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres

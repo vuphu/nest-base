@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import ms from 'ms';
 
 dotenv.config();
 
@@ -12,11 +13,11 @@ export const env = {
   JWT: {
     ACCESS_TOKEN: {
       SECRET: process.env.JWT_ACCESS_TOKEN_SECRET,
-      EXPIRES: process.env.JWT_ACCESS_TOKEN_EXPIRES || '7d',
+      EXPIRES: (process.env.JWT_ACCESS_TOKEN_EXPIRES || '7d') as ms.StringValue,
     },
     REFRESH_TOKEN: {
       SECRET: process.env.JWT_REFRESH_TOKEN_SECRET,
-      EXPIRES: process.env.JWT_REFRESH_TOKEN_EXPIRES || '30d',
+      EXPIRES: (process.env.JWT_REFRESH_TOKEN_EXPIRES || '30d') as ms.StringValue,
     },
   },
 };
