@@ -1,4 +1,4 @@
-import { ColumnGenerator } from '@/add-ons/typeorm';
+import { ColumnGenerator } from '@/common/packages/typeorm';
 import { MigrationInterface, QueryRunner, Table, TableForeignKey } from 'typeorm';
 
 export class CreateEventTable1653774221013 implements MigrationInterface {

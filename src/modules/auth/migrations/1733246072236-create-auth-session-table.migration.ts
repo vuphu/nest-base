@@ -1,4 +1,4 @@
-import { ColumnGenerator } from '@/add-ons/typeorm';
+import { ColumnGenerator } from '@/common/packages/typeorm';
 import { MigrationInterface, QueryRunner, Table, TableIndex } from 'typeorm';
 
 export class CreateAuthSessionTable1733246072236 implements MigrationInterface {
