@@ -1,7 +1,7 @@
 import { AuthService } from '../../services';
-import { env } from '@/settings';
-import { User } from '@/modules/users/models';
 import { transform } from '@/common';
+import { User } from '@/modules/users/models';
+import { env } from '@/settings';
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';

@@ -1,56 +1,42 @@
-import { fixupConfigRules, fixupPluginRules } from '@eslint/compat';
-import typescriptEslintEslintPlugin from '@typescript-eslint/eslint-plugin';
+import eslint from '@eslint/js';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import globals from 'globals';
-import tsParser from '@typescript-eslint/parser';
-import js from '@eslint/js';
-import { FlatCompat } from '@eslint/eslintrc';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import tseslint from 'typescript-eslint';
+import importPlugin from 'eslint-plugin-import';
+import { fixupPluginRules } from '@eslint/compat';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-});
-
-export default [
+export default tseslint.config(
   {
-    ignores: ['**/.eslintrc.js'],
+    ignores: ['eslint.config.mjs'],
   },
-  ...fixupConfigRules(
-    compat.extends('plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended', 'plugin:import/recommended'),
-  ),
+  eslint.configs.recommended,
+  ...tseslint.configs.recommendedTypeChecked,
+  eslintPluginPrettierRecommended,
   {
+    ...importPlugin.flatConfigs.recommended,
     plugins: {
-      '@typescript-eslint': fixupPluginRules(typescriptEslintEslintPlugin),
+      import: fixupPluginRules(importPlugin),
     },
-
+  },
+  {
     languageOptions: {
       globals: {
         ...globals.node,
         ...globals.jest,
       },
-
-      parser: tsParser,
-      ecmaVersion: 5,
-      sourceType: 'module',
-
+      sourceType: 'commonjs',
       parserOptions: {
-        project: 'tsconfig.json',
-        tsconfigRootDir: path.resolve(__dirname),
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
       },
     },
-
     settings: {
       'import/resolver': {
-        typescript: {
-          alwaysTryTypes: true,
-        },
+        typescript: true,
       },
     },
-
+  },
+  {
     rules: {
       '@typescript-eslint/interface-name-prefix': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
@@ -64,4 +50,4 @@ export default [
       ],
     },
   },
-];
+);

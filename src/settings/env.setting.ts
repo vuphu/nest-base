@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import ms from 'ms';
+import type ms from 'ms';
 
 dotenv.config();
 

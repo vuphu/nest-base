@@ -39,7 +39,7 @@ export class AuthService {
       await this.authSessionService.refreshSession(user.id, sessionId);
     }
 
-    const payload: object = transform(<JwtPayload>{ sub: user.id, sessionId }, snakeCase);
+    const payload: object = transform({ sub: user.id, sessionId }, snakeCase);
 
     return {
       accessToken: await this.jwtService.signAsync(payload),

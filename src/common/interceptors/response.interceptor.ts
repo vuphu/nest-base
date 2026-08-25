@@ -17,11 +17,11 @@ export class ResponseInterceptor<T extends object> implements NestInterceptor {
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     return next.handle().pipe(
-      map(async (data) => {
+      map(async (data: unknown) => {
         const object = plainToClass(this.classType, data);
         const objects = isArray(object) ? object : [object];
         for (const item of objects) {
-          const errors = await validate(item, { stopAtFirstError: true, whitelist: true });
+          const errors = await validate(item as object, { stopAtFirstError: true, whitelist: true });
           if (errors.length > 0) {
             console.error(errors);
             throw new InternalServerErrorException('Validate Exception');

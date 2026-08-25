@@ -1,9 +1,8 @@
 import { env } from './env.setting';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
-export const DatabaseSetting = TypeOrmModule.forRoot(<PostgresConnectionOptions>{
+export const DatabaseSetting = TypeOrmModule.forRoot({
   type: 'postgres',
   host: env.DATABASE_HOST,
   port: env.DATABASE_PORT,

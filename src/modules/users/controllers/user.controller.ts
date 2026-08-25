@@ -5,8 +5,8 @@ import { AuthUser } from '@/modules/auth/types';
 import { AuthGuard } from '@/modules/auth/guards';
 import { CurrentUser } from '@/modules/auth/decorators';
 import { ResponseInterceptor } from '@/common';
-import { Controller, Get, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Controller, Get, UseGuards, UseInterceptors } from '@nestjs/common';
 
 @Controller('users')
 @ApiTags('Users')

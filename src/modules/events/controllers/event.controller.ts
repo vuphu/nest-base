@@ -14,6 +14,8 @@ import {
 import { AuthGuard } from '@/modules/auth/guards';
 import { CurrentUser } from '@/modules/auth/decorators';
 import { AuthUser } from '@/modules/auth/types';
+import { CommandBus } from '@nestjs/cqrs';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
   Body,
   Controller,
@@ -28,8 +30,6 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CommandBus } from '@nestjs/cqrs';
 
 @Controller('events')
 @ApiTags('Events')
