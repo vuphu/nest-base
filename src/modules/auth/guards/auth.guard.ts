@@ -5,6 +5,10 @@ import { ExtractJwt } from 'passport-jwt';
 
 @Injectable()
 export class AuthGuard extends PassportGuard('jwt') {
+  constructor() {
+    super();
+  }
+
   handleRequest<TUser = any>(err: any, user: any, info: any, context: ExecutionContext, status?: any): TUser {
     const response = super.handleRequest<TUser>(err, user, info, context, status);
     const request = context.switchToHttp().getRequest<{ sessionId: string }>();
